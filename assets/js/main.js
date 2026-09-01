@@ -94,31 +94,42 @@
   }
 
   /* ---------- QUEBRA DE TÍTULOS EM LINHAS (reveal linha a linha) ---------- */
+  /* Duas passadas:
+     1) medição — cada palavra num <span> inline comum, com espaços reais como
+        nós de texto entre eles, para o navegador quebrar as linhas do jeito dele;
+     2) reconstrução — cada linha vira um bloco de texto normal.
+     Nada de inline-block com espaço embutido: o navegador colapsa o espaço no
+     fim de um inline-block e as palavras acabam grudadas. */
   function splitLines(el) {
-    var text = el.textContent.trim();
-    var words = text.split(/\s+/);
+    var words = el.textContent.replace(/\s+/g, ' ').trim().split(' ');
+    if (!words[0]) return [];
+
     el.textContent = '';
-    var spans = words.map(function (w, i) {
+    var probes = words.map(function (w, i) {
       var s = document.createElement('span');
-      s.textContent = w + (i < words.length - 1 ? ' ' : '');
-      s.style.display = 'inline-block';
+      s.textContent = w;
       el.appendChild(s);
+      if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
       return s;
     });
-    // agrupa por posição vertical → linhas reais depois do wrap
+
+    // agrupa as palavras por posição vertical → linhas reais depois do wrap
     var lines = [], cur = null, lastTop = null;
-    spans.forEach(function (s) {
-      var top = Math.round(s.offsetTop);
-      if (top !== lastTop) { cur = []; lines.push(cur); lastTop = top; }
-      cur.push(s);
+    probes.forEach(function (s, i) {
+      var top = Math.round(s.getBoundingClientRect().top);
+      if (lastTop === null || Math.abs(top - lastTop) > 2) {
+        cur = []; lines.push(cur); lastTop = top;
+      }
+      cur.push(words[i]);
     });
+
     el.textContent = '';
     return lines.map(function (group) {
       var mask = document.createElement('span');
       mask.style.cssText = 'display:block;overflow:hidden;';
       var inner = document.createElement('span');
       inner.style.cssText = 'display:block;will-change:transform,opacity;';
-      group.forEach(function (s) { inner.appendChild(s); });
+      inner.textContent = group.join(' ');
       mask.appendChild(inner);
       el.appendChild(mask);
       return inner;
