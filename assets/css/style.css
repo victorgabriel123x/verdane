@@ -1,5 +1,5 @@
 /* ==========================================================================
-   THE GREEN · Gastrobar — São Luís / MA
+   VERDANT HOUSE · Restaurante — São Paulo / SP
    Design system derivado da identidade oficial da marca.
    Display: Bodoni Moda · Texto/UI: Montserrat
    ========================================================================== */
@@ -489,9 +489,10 @@ main{position:relative;z-index:1}
 .foot__brand img{width:150px;opacity:.9}
 .foot__col h4{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:1rem}
 .foot__col ul{display:flex;flex-direction:column;gap:.6rem}
-.foot__col a,.foot__col li{color:var(--muted);font-size:.87rem;font-weight:300;line-height:1.6}
-.foot__col a{transition:color var(--t-fast) var(--ease)}
-.foot__col a:hover{color:var(--gold)}
+.foot__col a,.foot__col li,.foot__col button{color:var(--muted);font-size:.87rem;font-weight:300;line-height:1.6}
+.foot__col a,.foot__col button{transition:color var(--t-fast) var(--ease)}
+.foot__col a:hover,.foot__col button:hover{color:var(--gold)}
+.foot__col button{padding:0;text-align:left}
 .foot__bar{
   margin-top:clamp(2.5rem,6vw,3.5rem);padding-top:1.6rem;border-top:1px solid var(--hair-soft);
   display:flex;flex-wrap:wrap;gap:.8rem 1.5rem;align-items:center;justify-content:space-between;

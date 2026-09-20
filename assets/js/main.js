@@ -1,5 +1,5 @@
 /* ==========================================================================
-   THE GREEN · animações
+   VERDANT HOUSE · animações
    Lenis (smooth scroll) + GSAP/ScrollTrigger.
    Tudo degrada com elegância: sem JS, sem lib ou com "reduzir movimento",
    a página continua completa e legível.
@@ -27,7 +27,7 @@
   burger.addEventListener('click', function () {
     setMenu(!nav.classList.contains('is-open'));
   });
-  drawer.querySelectorAll('a').forEach(function (a) {
+  drawer.querySelectorAll('a, button').forEach(function (a) {
     a.addEventListener('click', function () { setMenu(false); });
   });
   document.addEventListener('keydown', function (e) {
